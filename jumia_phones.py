@@ -5,6 +5,10 @@ from urllib.request import Request, urlopen
 
 myurl = ['https://www.jumia.co.ke/mobile-phones/''https://www.jumia.co.ke/mobile-phones/?page=2#catalog-listing', 'https://www.jumia.co.ke/mobile-phones/?page=3#catalog-listing', 'https://www.jumia.co.ke/mobile-phones/?page=4#catalog-listing'] 
 
+f = open('phones.csv', 'w')
+headers = "Brand, Description, Price, Discount, Seller Rating \n"
+f.write("Brand, Description, Price, Discount, Seller Rating \n")
+
 for url in myurl:
     # # reachable
     # session = requests.Session()
@@ -35,6 +39,8 @@ for url in myurl:
                 disc = cont.find("div", {"class":"tag _dsct"}).get_text() 
             rating = cont.find("div", {"class":"stars _s"}).get_text()
 
+            f.write(brand + " | " + desc + " | " + price + " | " + disc + " | " + rating + "\n")
+
         except:
             brand = 'None'
             desc = 'None'
@@ -42,6 +48,9 @@ for url in myurl:
             price = 'None'
             rating = 'None'
 
-        print(count , " " + brand + " " + desc + " " + price + " " + disc + " " + rating)
+        
 
+        print(count , " " + brand + " " + desc + " " + price + " " + disc + " " + rating)
+    
+f.close()
     # print(page_soup.header.prettify())
