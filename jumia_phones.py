@@ -6,7 +6,7 @@ from urllib.request import Request, urlopen
 myurl = ['https://www.jumia.co.ke/mobile-phones/''https://www.jumia.co.ke/mobile-phones/?page=2#catalog-listing', 'https://www.jumia.co.ke/mobile-phones/?page=3#catalog-listing', 'https://www.jumia.co.ke/mobile-phones/?page=4#catalog-listing'] 
 
 f = open('phones.csv', 'w')
-headers = "Brand, Description, Price, Discount, Seller Rating \n"
+headers = "Brand, Description, Price, Discount, Seller Rating, link \n"
 f.write("Brand, Description, Price, Discount, Seller Rating \n")
 
 for url in myurl:
@@ -38,8 +38,9 @@ for url in myurl:
             else:
                 disc = cont.find("div", {"class":"tag _dsct"}).get_text() 
             rating = cont.find("div", {"class":"stars _s"}).get_text()
+            link = "https://www.jumia.co.ke"+cont['href']
 
-            f.write(brand + " | " + desc + " | " + price + " | " + disc + " | " + rating + "\n")
+            f.write(brand + " | " + desc + " | " + price + " | " + disc + " | " + rating + " | " + link +"\n")
 
         except:
             brand = 'None'
@@ -47,10 +48,11 @@ for url in myurl:
             disc = "Not available"
             price = 'None'
             rating = 'None'
+            link = 'None'
 
         
 
-        print(count , " " + brand + " " + desc + " " + price + " " + disc + " " + rating)
+        print(count , " " + brand + " " + desc + " " + price + " " + disc + " " + rating + "  " + link )
     
 f.close()
     # print(page_soup.header.prettify())
